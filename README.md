@@ -15,6 +15,12 @@
 
 
 ***
+## Diagramas de flujo
+### JavaScript API
+![api](https://raw.githubusercontent.com/nicole11robayo/DEV001-md-links-NR/api-y-cli/diagramas%20de%20flujo/diagrama%20fllujo%20API_page-0001.jpg)
+
+### CLI (Command Line Interface)
+![cli](https://raw.githubusercontent.com/nicole11robayo/DEV001-md-links-NR/api-y-cli/diagramas%20de%20flujo/diagrama%20flujo%20CLI_page-0001.jpg)
 
 ## 1. Preámbulo
 
