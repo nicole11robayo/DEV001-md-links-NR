@@ -1,4 +1,4 @@
-const {mdLinks} = require('./index.js');
+const {mdLinks} = require('../index.js');
 
 mdLinks('archivosPrueba', {validate:true})
     .then(res=>console.log(res))

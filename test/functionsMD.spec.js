@@ -1,4 +1,7 @@
-const {absoluteRoute, searchFilesMd, exitsRoute, readFile, readAllFiles} = require('../functionsMD.js');
+const {absoluteRoute, searchFilesMd, exitsRoute, readFile, readAllFiles, validateLinks} = require('../functionsMD.js');
+const axios = require('axios');
+
+jest.mock("axios");
 
 describe('probando función que verifica si una ruta existe o no', ()=>{
     it('Debería ser una función', ()=>{
@@ -100,6 +103,59 @@ describe('probando función que lee todos los archivos md y devuelve una promesa
         ]
         return readAllFiles(arrayRoutesMdFiles).then((res)=>{
             expect(res).toStrictEqual(resultArray);
+        })
+    })
+})
+
+describe('probando función que valida los links y devuelve una promesa que resuelve un array de objetos agregando status y ok', ()=>{
+    it('Debería devolver una promesa resuelta con un array de objetos que incluyen status y ok:ok cuando el link funciona', ()=>{
+        let arrayObjects= [
+            {
+            href: 'https://www.youtube.com/watch?v=Lub5qOmY4JQ',
+            text: 'https://www.youtube.com/watch?v=Lub5qOmY4JQ',
+            file: 'C:\\Users\\NICOLE ROBAYO\\Desktop\\DEV001-md-links-NR\\archivosPrueba\\pruba33.md',
+            }
+        ]
+        let arrayObjectsLinksValidate=[
+            {
+            href: 'https://www.youtube.com/watch?v=Lub5qOmY4JQ',
+            text: 'https://www.youtube.com/watch?v=Lub5qOmY4JQ',
+            file: 'C:\\Users\\NICOLE ROBAYO\\Desktop\\DEV001-md-links-NR\\archivosPrueba\\pruba33.md',
+            status: 200,
+            ok: 'OK'
+            }
+        ]
+        const expectedData = {status:200};
+        axios.get.mockResolvedValueOnce(Promise.resolve(expectedData));
+        // asignamos comportamiento deseado para este test
+
+        return validateLinks(arrayObjects).then(res=>{
+            expect(res).toStrictEqual(arrayObjectsLinksValidate);
+        })
+    })
+    it('Debería devolver una promesa resuelta con un array de objetos que incluyen status y ok:FAIL cuando el link NO funciona', ()=>{
+        let arrayObjectsWrongLinks= [
+            {
+            href: 'https://www.youtube.com/error123',
+            text: 'https://www.youtube.com/watch?v=Lub5qOmY4JQ',
+            file: 'C:\\Users\\NICOLE ROBAYO\\Desktop\\DEV001-md-links-NR\\archivosPrueba\\pruba33.md',
+            }
+        ]
+        let arrayObjectsLinksValidateWrong=[
+            {
+            href: 'https://www.youtube.com/error123',
+            text: 'https://www.youtube.com/watch?v=Lub5qOmY4JQ',
+            file: 'C:\\Users\\NICOLE ROBAYO\\Desktop\\DEV001-md-links-NR\\archivosPrueba\\pruba33.md',
+            status: 404,
+            ok: 'FAIL'
+            }
+        ]
+        const expectedData = {status:404};
+        axios.get.mockResolvedValueOnce(Promise.reject(expectedData));
+        // asignamos comportamiento deseado para este test
+
+        return validateLinks(arrayObjectsWrongLinks).then(res=>{
+            expect(res).toStrictEqual(arrayObjectsLinksValidateWrong);
         })
     })
 })
