@@ -114,7 +114,13 @@ describe('probando función que valida los links y devuelve una promesa que resu
             href: 'https://www.youtube.com/watch?v=Lub5qOmY4JQ',
             text: 'https://www.youtube.com/watch?v=Lub5qOmY4JQ',
             file: 'C:\\Users\\NICOLE ROBAYO\\Desktop\\DEV001-md-links-NR\\archivosPrueba\\pruba33.md',
+            },
+            {
+            href: 'https://es.wikipedia.org/wiki/Markdown',
+            text: 'https://es.wikipedia.org/wiki/Markdown',
+            file: 'C:\\Users\\NICOLE ROBAYO\\Desktop\\DEV001-md-links-NR\\archivosPrueba\\pruba33.md'
             }
+
         ]
         let arrayObjectsLinksValidate=[
             {
@@ -123,16 +129,25 @@ describe('probando función que valida los links y devuelve una promesa que resu
             file: 'C:\\Users\\NICOLE ROBAYO\\Desktop\\DEV001-md-links-NR\\archivosPrueba\\pruba33.md',
             status: 200,
             ok: 'OK'
+            },
+            {
+            href: 'https://es.wikipedia.org/wiki/Markdown',
+            text: 'https://es.wikipedia.org/wiki/Markdown',
+            file: 'C:\\Users\\NICOLE ROBAYO\\Desktop\\DEV001-md-links-NR\\archivosPrueba\\pruba33.md',
+            status: 200,
+            ok: 'OK'
             }
+
         ]
-        const expectedData = {status:200};
-        axios.get.mockResolvedValueOnce(Promise.resolve(expectedData));
         // asignamos comportamiento deseado para este test
+        const expectedDataResolve = {status:200};
+        axios.get.mockResolvedValue(Promise.resolve(expectedDataResolve));
 
         return validateLinks(arrayObjects).then(res=>{
             expect(res).toStrictEqual(arrayObjectsLinksValidate);
         })
     })
+    
     it('Debería devolver una promesa resuelta con un array de objetos que incluyen status y ok:FAIL cuando el link NO funciona', ()=>{
         let arrayObjectsWrongLinks= [
             {
@@ -151,11 +166,12 @@ describe('probando función que valida los links y devuelve una promesa que resu
             }
         ]
         const expectedData = {status:404};
-        axios.get.mockResolvedValueOnce(Promise.reject(expectedData));
+        axios.get.mockResolvedValue(Promise.reject(expectedData));
         // asignamos comportamiento deseado para este test
 
         return validateLinks(arrayObjectsWrongLinks).then(res=>{
             expect(res).toStrictEqual(arrayObjectsLinksValidateWrong);
         })
     })
+
 })

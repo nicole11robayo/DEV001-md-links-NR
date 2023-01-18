@@ -29,7 +29,7 @@ function searchFilesMd(route){
     directoryFiles.forEach(file =>{
       let routeDirectoryFile = path.join(route, file);
       if(fs.statSync(routeDirectoryFile).isDirectory()){
-        files = filesMd.concat(searchFilesMd(routeDirectoryFile));
+        files= files.concat(searchFilesMd(routeDirectoryFile));
       }else{
         files.push(routeDirectoryFile);
       }

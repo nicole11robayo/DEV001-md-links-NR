@@ -1,4 +1,4 @@
-const {validateLinks} = require('../functionsMD.js')
+const {validateLinks} = require('./functionsMD.js')
 //const {statsPlusBroken} = require('./functionsCLI.js')
 
 let arrayPrueba= [
